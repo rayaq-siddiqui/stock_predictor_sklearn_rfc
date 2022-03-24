@@ -12,16 +12,18 @@ class Stock:
     def __init__(self, ticker, data_path=None):
 
         self.ticker = ticker
+        print(self.ticker)
         if not data_path:
             self.data_path = 'data/' + str(self.ticker).lower() + '_data.json'
         else:
             self.data_path = data_path
+        print(self.data_path)
         
         if os.path.exists(self.data_path):
             with open(self.data_path) as f:
                 self.hist = pd.read_json(self.data_path)
         else:
-            t = yf.Ticker("MSFT")
+            t = yf.Ticker(self.ticker)
             self.hist = t.history(period="max")
             self.hist.to_json(self.data_path)
 
